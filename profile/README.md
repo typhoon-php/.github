@@ -1,13 +1,11 @@
-<p align="center">
-    <img src="https://github.com/typhoon-php/.github/raw/main/profile/logo.png" width="200">
-</p>
+<img src="https://github.com/typhoon-php/.github/raw/main/profile/logo.png" width="200">
 
 Hello, PHP developer!
 
-If you ever used static analysis tools in your projects, then you've probably wondered, how all these sophisticated
-types could be used in runtime tools like serializers, dependency injection containers, API doc generators, etc.
+If you've ever used static analysis in your PHP projects, you probably wondered how all these cool phpDoc types could
+be taken into account in runtime tools like serializers, dependency injection containers, API doc generators, etc.
 
 Typhoon's mission is to give you everything you might need to accomplish this:
 
-- a rich type system, compatible with Psalm and PHPStan,
-- static reflection, supporting phpDoc types and generics.
+- [a rich type system abstraction](https://github.com/typhoon-php/typhoon/blob/0.4.x/docs/type.md), compatible with Psalm and PHPStan,
+- [static reflection](https://github.com/typhoon-php/typhoon/blob/0.4.x/docs/reflection.md), supporting phpDoc types and generics.
