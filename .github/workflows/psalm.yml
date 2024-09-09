@@ -3,12 +3,12 @@ on:
     inputs:
       php:
         description: Comma-separated versions of PHP
-        default: 8.1
+        default: "['8.1']"
         required: false
         type: string
       dependencies:
         description: Comma-separated dependency versions (locked, lowest, highest)
-        default: locked, lowest, highest
+        default: "['locked', 'lowest', 'highest']"
         required: false
         type: string
 
