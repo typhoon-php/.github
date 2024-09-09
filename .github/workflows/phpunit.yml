@@ -38,7 +38,7 @@ jobs:
         with:
           composer-options: --optimize-autoloader
           dependency-versions: ${{ matrix.dependencies }}
-      - run: composer test -- --colors=always ${{ steps.coverage.outputs.coverage && '--coverage-clover coverage.xml' }}
+      - run: composer test -- --colors=always ${{ steps.coverage.outputs.coverage && '--coverage-clover coverage.xml' || '' }}
       - if: ${{ steps.coverage.outputs.coverage }}
         uses: codecov/codecov-action@v4
         env:
