@@ -1,0 +1,33 @@
+on:
+  workflow_call:
+    inputs:
+      php:
+        description: Comma-separated versions of PHP
+        default: 8.1
+        required: false
+        type: string
+      dependencies:
+        description: Comma-separated dependency versions (locked, lowest, highest)
+        default: locked, lowest, highest
+        required: false
+        type: string
+
+jobs:
+  psalm:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ${{ fromJson(inputs.php) }}
+        dependencies: ${{ fromJson(inputs.dependencies) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: none
+      - uses: ramsey/composer-install@v3
+        with:
+          composer-options: --optimize-autoloader
+          dependency-versions: ${{ matrix.dependencies }}
+      - run: composer psalm -- --stats --output-format=github --shepherd
