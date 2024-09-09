@@ -1,0 +1,23 @@
+on:
+  workflow_call:
+    inputs:
+      php:
+        description: PHP version
+        type: string
+        required: false
+        default: 8.1
+
+jobs:
+  php-cs-fixer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php }}
+          tools: composer:v2, cs2pr
+          coverage: none
+      - uses: ramsey/composer-install@v3
+        with:
+          composer-options: --optimize-autoloader
+      - run: composer fixcs -- --dry-run --format=checkstyle | cs2pr
