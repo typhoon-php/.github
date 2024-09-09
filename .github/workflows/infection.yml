@@ -11,7 +11,7 @@ on:
         required: false
 
 jobs:
-  php-cs-fixer:
+  infection:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
