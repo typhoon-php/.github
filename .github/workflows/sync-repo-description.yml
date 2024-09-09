@@ -1,7 +1,8 @@
-name: Check
-
 on:
-  workflow_call: ~
+  workflow_call:
+    secrets:
+      pat:
+        required: true
 
 jobs:
   sync-repo-description:
@@ -12,7 +13,7 @@ jobs:
           sparse-checkout: composer.json
       - uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.TYPHOON_REPO_ADMIN_TOKEN }}
+          github-token: ${{ secrets.pat }}
           script: |
             const composer = require('./composer.json');
             await github.rest.repos.update({
