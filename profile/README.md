@@ -9,8 +9,8 @@ applied to runtime tools like serializers, dependency injection containers, API 
 
 Typhoon's mission is to give you everything you need to accomplish this:
 
-- [Rich type system abstraction](https://github.com/typhoon-php/typhoon/blob/0.4.x/docs/type.md) compatible with Psalm
+- [Rich type system abstraction](https://github.com/typhoon-php/type) compatible with Psalm
   and PHPStan.
-- [Static reflection](https://github.com/typhoon-php/typhoon/blob/0.4.x/docs/reflection.md) supporting phpDoc types and
+- [Static reflection](https://github.com/typhoon-php/reflection) supporting phpDoc types and
   template resolution.
 - More tools coming soon!
