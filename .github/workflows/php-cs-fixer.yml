@@ -7,7 +7,7 @@ on:
         required: false
         default: 8.1
     secrets:
-      composer-token:
+      COMPOSER_TOKEN:
         required: false
 
 jobs:
@@ -25,5 +25,5 @@ jobs:
           composer-options: --optimize-autoloader
         env:
           COMPOSER_AUTH: |
-            {"github-oauth": {"github.com": "${{ secrets.composer-token || 'na' }}"}}
+            {"github-oauth": {"github.com": "${{ secrets.COMPOSER_TOKEN || 'na' }}"}}
       - run: composer fixcs -- --dry-run --format=checkstyle | cs2pr
