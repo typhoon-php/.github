@@ -53,7 +53,7 @@ jobs:
           composer-options: --optimize-autoloader
         env:
           COMPOSER_AUTH: |
-            {"github-oauth": {"github.com": "${{ secrets.COMPOSER_TOKEN || 'na' }}"}}
+            {"github-oauth": {"github.com": "${{ secrets.TYPHOON_REPO_ACCESS_TOKEN || 'na' }}"}}
       - run: composer fixcs -- --dry-run --format=checkstyle | cs2pr
 
   psalm:
