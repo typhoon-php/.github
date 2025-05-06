@@ -4,11 +4,14 @@ on:
       php_versions:
         description: PHP versions in JSON array format
         type: string
-        default: '["8.1", "8.2", "8.3"]'
+        default: '["8.1", "8.2", "8.3", "8.4"]'
       dependencies:
         description: Dependency versions (locked, lowest, highest) in JSON array format
         type: string
         default: '["locked", "lowest", "highest"]'
+      rector:
+        type: boolean
+        default: true
       phpstan:
         type: boolean
         default: true
@@ -47,8 +50,7 @@ jobs:
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH || '{}' }}
       - run: composer normalize --dry-run
-      - run: composer check-require
-      - run: composer check-unused
+      - run: composer analyse-deps
 
   php-cs-fixer:
     runs-on: ubuntu-latest
@@ -65,6 +67,23 @@ jobs:
         env:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH || '{}' }}
       - run: composer fixcs -- --dry-run --format=checkstyle | cs2pr
+
+  rector:
+    if: inputs.rector
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ fromJSON(inputs.php_versions)[0] }}
+          tools: composer:v2
+          coverage: none
+      - uses: ramsey/composer-install@v3
+        with:
+          composer-options: --optimize-autoloader
+        env:
+          COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH || '{}' }}
+      - run: composer rector -- --dry-run
 
   phpstan:
     if: inputs.phpstan
@@ -136,7 +155,7 @@ jobs:
           COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH || '{}' }}
       - run: composer test -- --colors=always ${{ steps.coverage.outputs.coverage && '--coverage-clover coverage.xml' || '' }}
       - if: ${{ steps.coverage.outputs.coverage }}
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         env:
           CODECOV_TOKEN: ${{ secrets.codecov-token }}
 
